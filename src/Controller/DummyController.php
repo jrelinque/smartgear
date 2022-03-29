@@ -28,14 +28,25 @@ class DummyController extends AbstractController
      * Checking connection
      *
      * @Route("/connect/google/check", name="connect_google_check")
+     * @param Request $request
+     * @param ClientRegistry $clientRegistry
+     * @return Response
+     * @throws \League\OAuth2\Client\Provider\Exception\IdentityProviderException
      */
-    public function connectCheckAction(Request $request): Response
+    public function connectCheckAction(Request $request, ClientRegistry $clientRegistry): Response
     {
-        //var_dump($this->getUser());
-        if (!$this->getUser()) {
-            return new JsonResponse(['status' => false, 'message' => 'User not found!']);
-        } else {
-            return $this->redirectToRoute('default');
+        //Fetch client from Google
+        $client = $clientRegistry->getClient('google');
+        try {
+            $accessToken = $client->getAccessToken()->getValues();
+            if (key_exists('id_token', $accessToken)) {
+                $accessTokenId = $accessToken['id_token'];
+                return new JsonResponse(['id_token' => $accessTokenId, 'status' => true, 'message' => 'Token!']);
+            }
+        } catch (IdentityProviderException $e) {
+            var_dump($e->getMessage());
+            die;
         }
     }
+
 }
