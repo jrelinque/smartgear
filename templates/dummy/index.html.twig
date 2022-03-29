@@ -8,15 +8,16 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    {% set token = app.session.get('token') %}
+    <div class="example-wrapper">
+        <h1> SmartGear</h1>
+        {% if token %}
+            <h4>Token IRIS: {{ token }}</h4>
+        {% else %}
+            <h4><a href="{{ '/connect/google/' }}">Login with google</a></h4>
+        {%  endif %}
+    </div>
 
-    <h1>Hello {{ response_http }}! ✅</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/symfony_docker/src/Controller/DummyController.php'|file_link(0) }}">src/Controller/DummyController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/symfony_docker/templates/dummy/index.html.twig'|file_link(0) }}">templates/dummy/index.html.twig</a></code></li>
-    </ul>
-</div>
+
 {% endblock %}
