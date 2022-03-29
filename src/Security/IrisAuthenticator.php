@@ -33,10 +33,21 @@ class IrisAuthenticator extends OAuth2Authenticator {
     }
 
     public function authenticate(Request $request): Passport {
+        //Creating the connection client with Google
         $client = $this->clientRegistry->getClient('google');
+        $id_token = "";
         $accessToken = $this->fetchAccessToken($client);
 
-        $request->getSession()->set('token', $accessToken->getToken());
+        //Let's try to catch the access token. Also, we need the id_token value
+        if ($accessToken && $accessToken->getValues()) {
+            $values = $accessToken->getValues();
+            if (key_exists('id_token', $values)) {
+                $id_token = $values['id_token'];
+            }
+        }
+
+        //We're going to put token on session
+        $request->getSession()->set('token', $id_token);
 
         return new SelfValidatingPassport(
         new UserBadge($accessToken->getToken(), function() use ($accessToken, $client) {
