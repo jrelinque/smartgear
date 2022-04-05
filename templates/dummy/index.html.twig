@@ -8,14 +8,25 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-    {% set token = app.session.get('token') %}
+    {% set token = app.session.get('iris_token') %}
     <div class="example-wrapper">
         <h1> SmartGear</h1>
         {% if token %}
-            <h4>Token IRIS: {{ token }}</h4>
+            <details>
+                <summary>Token IRIS</summary>
+                <p>{{  token }}</p>
+            </details>
         {% else %}
             <h4><a href="{{ '/connect/google/' }}">Login with google</a></h4>
         {%  endif %}
+
+        {% if response_http %}
+            <details>
+                <summary>WebService called: {{ called_method }}</summary>
+                <p>{{ response_http }}</p>
+            </details>
+        {%  endif %}
+
     </div>
 
 

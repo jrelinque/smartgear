@@ -46,8 +46,9 @@ class IrisAuthenticator extends OAuth2Authenticator {
             }
         }
 
-        //We're going to put token on session
-        $request->getSession()->set('token', $id_token);
+        //We're going
+        // to put token on session
+        $request->getSession()->set('iris_token', $id_token);
 
         return new SelfValidatingPassport(
         new UserBadge($accessToken->getToken(), function() use ($accessToken, $client) {

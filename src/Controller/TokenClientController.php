@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-class DummyController extends AbstractController {
+class TokenClientController extends AbstractController {
 
     /**
      * Link to this controller to start the "connect" process
