@@ -16,11 +16,12 @@
                 <summary>Token IRIS</summary>
                 <p>{{  token }}</p>
             </details>
+            <p>Click to call <a href="{{ '/irisapi/getprofiles/' }}">Get Profiles webservice method</a></p>
         {% else %}
             <h4><a href="{{ '/connect/google/' }}">Login with google</a></h4>
         {%  endif %}
 
-        {% if response_http %}
+        {% if response_http is defined %}
             <details>
                 <summary>WebService called: {{ called_method }}</summary>
                 <p>{{ response_http }}</p>
